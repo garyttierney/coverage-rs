@@ -1,0 +1,10 @@
+name: 'coverage'
+description: 'Generate code coverage for Cargo projects using cargo-tarpaulin'
+inputs:
+  tarpaulin-version:
+    description: 'The version of cargo-tarpaulin to use'
+    required: true
+    default: 'latest'
+runs:
+  using: 'node12'
+  main: 'lib/index.js'
