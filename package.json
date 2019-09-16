@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "scripts": {
+    "build": "ncc build src/index.ts --minify",
+    "watch": "ncc build src/index.ts --watch",
+    "test": "jest"
+  },
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/exec": "^1.0.0",
     "@actions/github": "^1.0.0",
     "@actions/io": "^1.0.0",
-    "decompress": "^4.2.0",
-    "decompress-targz": "^4.1.1",
-    "download": "^6.2.4"
+    "download": "^7.1.0"
   },
   "devDependencies": {
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1",
+    "jest": "^24.9.0",
+    "@types/download": "6.2.4",
     "@types/node": "^12.7.5",
-    "@types/download": "6.2.4"
+    "@zeit/ncc": "^0.20.5",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
   }
 }

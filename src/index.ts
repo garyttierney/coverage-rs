@@ -1,12 +1,14 @@
 import download from 'download';
-import decompressTargz from 'decompress-targz';
 import {GitHub} from '@actions/github';
+import * as core from '@actions/core';
 import * as exec from '@actions/exec';
+import * as io from '@actions/io';
 
 async function main() {
     let version;
-    const requestedVersion = 'latest';
+    const requestedVersion = '0.8.6';
 
+    // @ts-ignore
     if (requestedVersion === 'latest') {
         const gh = new GitHub('token');
 
@@ -20,14 +22,17 @@ async function main() {
         version = requestedVersion;
     }
 
-    const archiveUrl = `https://github.com/xd009642/tarpaulin/releases/download/${version}/cargo-tarpaulin-${version}-travis.tar.gz`;
+    const outputDir = `tarpaulin/${version}`;
+    await io.mkdirP(outputDir);
 
-    await download(archiveUrl, '.', {
+    const archiveName = `cargo-tarpaulin-${version}-travis.tar.gz`;
+    const archiveUrl = `https://github.com/xd009642/tarpaulin/releases/download/${version}/${archiveName}`;
+
+    await download(archiveUrl, outputDir, {
         followRedirect: true,
-        plugins: [decompressTargz()]
     });
 
-    await exec.exec('cargo-tarpaulin');
+    await exec.exec('tar', ['-C', '/usr/share/rust/.cargo/bin/', '-xvf', `${outputDir}/${archiveName}`]);
 }
 
 main();
