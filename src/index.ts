@@ -1,26 +1,12 @@
 import download from 'download';
-import {GitHub} from '@actions/github';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as io from '@actions/io';
 
 async function main() {
-    let version;
-    const requestedVersion = '0.8.6';
-
-    // @ts-ignore
-    if (requestedVersion === 'latest') {
-        const gh = new GitHub('token');
-
-        const latestReleaseResponse = await gh.repos.getLatestRelease({
-            owner: 'xd009642',
-            repo: 'tarpaulin'
-        });
-
-        version = latestReleaseResponse.data.tag_name;
-    } else {
-        version = requestedVersion;
-    }
+    const version = core.getInput('tarpaulin-version', {
+        required: true
+    });
 
     const outputDir = `tarpaulin/${version}`;
     await io.mkdirP(outputDir);

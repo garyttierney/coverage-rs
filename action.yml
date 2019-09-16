@@ -4,7 +4,7 @@ inputs:
   tarpaulin-version:
     description: 'The version of cargo-tarpaulin to use'
     required: true
-    default: 'latest'
+    default: '0.8.6'
 runs:
   using: 'node12'
   main: 'dist/index.js'
